@@ -1,6 +1,7 @@
 // require packages
 var mysql = require("mysql");
 var inquirer = require("inquirer");
+require( 'console.table' );
 
 // create connection information for sql database
 var connection = mysql.createConnection({
@@ -26,7 +27,7 @@ connection.connect(function (err) {
 function displayItems() {
     connection.query("SELECT * FROM products", function (err, res) {
         if (err) throw err;
-        console.log(res);
+        console.table(res);
         // run itemCheck function after displayItems runs
         itemCheck();
     });
@@ -62,16 +63,75 @@ function itemCheck() {
         ])
         // query the bamazon database for the product 
         .then(function (answer) {
-            var query = "SELECT id, product_name, price, stock_quantity FROM products WHERE ?";
-            connection.query(query, { id: answer.id }, function (err, res) {
-                for (var i = 0; i < res.length; i++) {
-                    console.log("\nProduct ID: " + res[i].id + " || Product Name: " + res[i].product_name + " || Price: " + res[i].price + " || Quantity: " + res[i].stock_quantity);
-                }
-                return res[i];
-                quantityCheck();
-            });
-        });
-}
+
+            connection.query("SELECT * FROM products WHERE ?", { product: answer.song }
+
+            // then take user answer and check database for quantity
+            // if user's answer.quantity is <= database.quantity
+                // then return "yes item is available, your order has been processed!"
+                // and update database - quantity
+            // if not then return "sorry, there is not enough product in stock."
+
+            
+
+
+
+
+
+
+
+
+
+            
+    //         "
+    //         var query = "SELECT id FROM products WHERE ?";
+    //         connection.query(query, { id: answer.id }, function (err, res) {
+           
+    //         for (var i = 0; i < results.length; i++) {
+    //           if (results[i].item_name === answer.choice) {
+    //             chosenItem = results[i];
+    //           }
+    //         }
+    //         // determine if bid was high enough
+    //         if (chosenItem.highest_bid < parseInt(answer.bid)) {
+    //           // bid was high enough, so update db, let the user know, and start over
+    //           connection.query(
+    //             "UPDATE auctions SET ? WHERE ?",
+    //             [
+    //               {
+    //                 highest_bid: answer.bid
+    //               },
+    //               {
+    //                 id: chosenItem.id
+    //               }
+    //             ],
+    //             function(error) {
+    //               if (error) throw err;
+    //               console.log("Bid placed successfully!");
+    //               start();
+    //             }
+    //           );
+    //         }
+    //         else {
+    //           // bid wasn't high enough, so apologize and start over
+    //           console.log("Your bid was too low. Try again...");
+    //           start();
+    //         }
+    //       });
+    //   });
+    // }
+            
+            
+            
+//             var query = "SELECT id, product_name, price, stock_quantity FROM products WHERE ?";
+//             connection.query(query, { id: answer.id }, function (err, res) {
+//                 for (var i = 0; i < res.length; i++) {
+//                 }
+//                 return res[i];
+//                 // quantityCheck();
+//             });
+//         });
+// }
 
 // function quantityCheck (itemCheck) {
 //     inquirer
